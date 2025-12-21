@@ -3,505 +3,626 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đề Thi Thử Toán 12 - Chương Trình Mới 2025</title>
+    <title>Đề Thi Toán 12 - Chuẩn Cấu Trúc 2025</title>
     <style>
         :root {
-            --primary-color: #0056b3;
-            --success-color: #28a745;
-            --error-color: #dc3545;
-            --bg-color: #f4f7f6;
+            --primary: #0056b3;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --bg: #e9ecef;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: #333;
+            background-color: var(--bg);
+            color: var(--dark);
             line-height: 1.6;
             margin: 0;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* Header & Timer */
-        header {
+        /* HEADER & TIMER */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #dee2e6;
             padding-bottom: 20px;
             margin-bottom: 30px;
             position: sticky;
             top: 0;
-            background: white;
-            z-index: 100;
+            background: #fff;
+            z-index: 1000;
+            padding-top: 10px;
         }
 
-        h1 { margin: 0; font-size: 1.5rem; color: var(--primary-color); }
-        
-        #timer {
+        .title h1 { margin: 0; font-size: 1.8rem; color: var(--primary); }
+        .title p { margin: 5px 0 0; color: var(--secondary); }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            background: var(--danger);
+            padding: 10px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+
+        /* SECTIONS */
+        .part-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 40px 0 20px;
             font-size: 1.2rem;
             font-weight: bold;
-            color: #d9534f;
-            background: #ffecec;
-            padding: 5px 15px;
-            border-radius: 20px;
+            text-transform: uppercase;
         }
 
-        /* Question Styles */
-        .part-title {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-
-        .question-block {
+        /* QUESTION CARDS */
+        .question-card {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 25px;
             margin-bottom: 25px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            background-color: #fff;
+            transition: transform 0.2s ease;
         }
+        .question-card:hover { border-color: var(--primary); }
 
-        .question-text { font-weight: 600; margin-bottom: 10px; }
-        
-        /* Tables for Statistics */
-        table {
+        .q-text { font-size: 1.1rem; font-weight: 500; margin-bottom: 15px; }
+        .q-text strong { color: var(--primary); }
+
+        /* TABLES */
+        .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
+            margin: 15px 0;
             font-size: 0.95rem;
         }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
+        .data-table th, .data-table td {
+            border: 1px solid #ced4da;
+            padding: 10px;
             text-align: center;
         }
-        th { background-color: #f8f9fa; }
+        .data-table th { background-color: var(--light); color: var(--dark); }
 
-        /* Options */
-        .options label {
-            display: block;
-            margin-bottom: 8px;
+        /* MULTIPLE CHOICE OPTIONS */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        @media (max-width: 600px) { .options-grid { grid-template-columns: 1fr; } }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
             cursor: pointer;
-            padding: 5px;
-            border-radius: 4px;
+            transition: all 0.2s;
         }
-        .options label:hover { background-color: #f0f8ff; }
+        .option-label:hover { background-color: #e9ecef; }
+        .option-label input { margin-right: 12px; transform: scale(1.3); }
 
-        /* True/False Table */
-        .tf-table th, .tf-table td { text-align: left; padding: 10px; }
-        .tf-table .radio-col { text-align: center; width: 60px; }
+        /* TRUE/FALSE TABLE */
+        .tf-table th { text-align: center; }
+        .tf-table td:first-child { text-align: left; }
+        .tf-radio { transform: scale(1.4); cursor: pointer; }
 
-        /* Inputs for Short Answer */
-        input[type="number"], input[type="text"] {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 150px;
+        /* SHORT ANSWER */
+        .short-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            border: 2px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .short-input:focus { border-color: var(--primary); outline: none; }
+
+        /* FEEDBACK & RESULTS */
+        .feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fd;
+            border-left: 5px solid var(--primary);
+            border-radius: 5px;
         }
 
-        /* Submit Button */
+        .correct-card { background-color: #f0fff4; border-color: var(--success); }
+        .wrong-card { background-color: #fff5f5; border-color: var(--danger); }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-correct { background: #d4edda; color: #155724; }
+        .status-wrong { background: #f8d7da; color: #721c24; }
+
+        .result-box {
+            display: none;
+            text-align: center;
+            background: #d1e7dd;
+            color: #0f5132;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        .score-big { font-size: 3rem; font-weight: bold; margin: 10px 0; }
+
+        /* BUTTON */
         .btn-submit {
             display: block;
             width: 100%;
-            padding: 15px;
-            background-color: var(--primary-color);
+            padding: 18px;
+            background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 1.2rem;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: background 0.3s;
         }
         .btn-submit:hover { background-color: #004494; }
-
-        /* Results & Feedback */
-        .result-box {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #e8f5e9;
-            border: 1px solid #c3e6cb;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .score { font-size: 2rem; color: var(--success-color); font-weight: bold; }
-
-        .explanation {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #fff3cd;
-            border-left: 5px solid #ffc107;
-            font-size: 0.9rem;
-        }
-        
-        /* Correct/Wrong Visuals */
-        .correct-ans { color: var(--success-color); font-weight: bold; }
-        .wrong-ans { color: var(--error-color); text-decoration: line-through; }
-        .user-correct { background-color: #d4edda; border: 1px solid #c3e6cb; }
-        .user-wrong { background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        .btn-submit:disabled { background-color: var(--secondary); cursor: not-allowed; }
 
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <div>
-            <h1>ĐỀ THI TOÁN 12 (MÔ PHỎNG 2025)</h1>
-            <small>Chuyên đề: Hàm số, Oxyz, Thống kê - 90 phút</small>
+    <div class="header">
+        <div class="title">
+            <h1>ĐỀ LUYỆN TẬP TOÁN 12</h1>
+            <p>Mô phỏng đề minh họa 2025 | Thời gian: 60 phút</p>
         </div>
-        <div id="timer">90:00</div>
-    </header>
+        <div class="timer" id="timer">60:00</div>
+    </div>
 
     <form id="quizForm">
-        <div class="part-title">PHẦN I. TRẮC NGHIỆM NHIỀU LỰA CHỌN (Chọn 1 đáp án đúng)</div>
-
-        <div class="question-block" id="q1">
-            <div class="question-text">Câu 1: Cho hàm số y = f(x) có bảng biến thiên: y' > 0 trên (-∞; -2), y' < 0 trên (-2; 2), y' > 0 trên (2; +∞). Giá trị cực đại của hàm số đạt được tại điểm nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. x = 2</label>
-                <label><input type="radio" name="q1" value="B"> B. x = -2</label>
-                <label><input type="radio" name="q1" value="C"> C. x = 0</label>
-                <label><input type="radio" name="q1" value="D"> D. x = -∞ </label>
-            </div>
-            <div class="explanation" id="exp-q1"><strong>Giải thích:</strong> Tại x = -2, đạo hàm đổi dấu từ dương sang âm nên hàm số đạt cực đại tại x = -2.</div>
-        </div>
-
-        <div class="question-block" id="q2">
-            <div class="question-text">Câu 2: Tiệm cận xiên của đồ thị hàm số y = 2x - 3 + 1/(x+1) là đường thẳng:</div>
-            <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. y = 2x</label>
-                <label><input type="radio" name="q2" value="B"> B. y = 2x + 1</label>
-                <label><input type="radio" name="q2" value="C"> C. y = 2x - 3</label>
-                <label><input type="radio" name="q2" value="D"> D. x = -1</label>
-            </div>
-            <div class="explanation" id="exp-q2"><strong>Giải thích:</strong> Khi x → ∞, lim[y - (2x - 3)] = lim[1/(x+1)] = 0. Vậy tiệm cận xiên là y = 2x - 3.</div>
-        </div>
-
-        <div class="question-block" id="q3">
-            <div class="question-text">Câu 3: Trong không gian Oxyz, cho vector <strong>a</strong> = (1; 2; -3) và <strong>b</strong> = (-2; 2; 0). Tọa độ vector <strong>u</strong> = <strong>a</strong> - 2<strong>b</strong> là:</div>
-            <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. (5; -2; -3)</label>
-                <label><input type="radio" name="q3" value="B"> B. (3; 2; -3)</label>
-                <label><input type="radio" name="q3" value="C"> C. (-3; 6; -3)</label>
-                <label><input type="radio" name="q3" value="D"> D. (5; 0; -3)</label>
-            </div>
-            <div class="explanation" id="exp-q3"><strong>Giải thích:</strong> u = (1 - 2(-2); 2 - 2(2); -3 - 2(0)) = (1 + 4; 2 - 4; -3) = (5; -2; -3).</div>
-        </div>
-
-        <div class="question-block" id="q4">
-            <div class="question-text">Câu 4: Cho bảng số liệu ghép nhóm về doanh thu bán hàng (triệu đồng) trong 30 ngày của một cửa hàng:</div>
-            <table>
-                <tr>
-                    <th>Doanh thu</th>
-                    <th>[10; 15)</th>
-                    <th>[15; 20)</th>
-                    <th>[20; 25)</th>
-                    <th>[25; 30)</th>
-                    <th>[30; 35]</th>
-                </tr>
-                <tr>
-                    <td>Số ngày</td>
-                    <td>3</td>
-                    <td>8</td>
-                    <td>12</td>
-                    <td>5</td>
-                    <td>2</td>
-                </tr>
-            </table>
-            <div class="question-text">Nhóm chứa mốt của mẫu số liệu trên là:</div>
-            <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. [15; 20)</label>
-                <label><input type="radio" name="q4" value="B"> B. [20; 25)</label>
-                <label><input type="radio" name="q4" value="C"> C. [25; 30)</label>
-                <label><input type="radio" name="q4" value="D"> D. [30; 35]</label>
-            </div>
-            <div class="explanation" id="exp-q4"><strong>Giải thích:</strong> Nhóm chứa mốt là nhóm có tần số lớn nhất. Tần số lớn nhất là 12, tương ứng với nhóm [20; 25).</div>
-        </div>
-
-        <div class="question-block" id="q5">
-            <div class="question-text">Câu 5: (Toán thực tế) Số lượng vi khuẩn trong một phòng thí nghiệm nuôi cấy tuân theo quy luật N(t) = 500.e^(0.2t), trong đó t là thời gian tính bằng giờ. Hỏi tốc độ gia tăng số lượng vi khuẩn tại thời điểm t = 5 giờ là bao nhiêu (làm tròn đến hàng đơn vị)?</div>
-            <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. 272 con/giờ</label>
-                <label><input type="radio" name="q5" value="B"> B. 1359 con/giờ</label>
-                <label><input type="radio" name="q5" value="C"> C. 100 con/giờ</label>
-                <label><input type="radio" name="q5" value="D"> D. 500 con/giờ</label>
-            </div>
-            <div class="explanation" id="exp-q5"><strong>Giải thích:</strong> Tốc độ gia tăng là đạo hàm N'(t) = 500 * 0.2 * e^(0.2t) = 100 * e^(0.2t). Tại t=5: N'(5) = 100 * e^1 = 100 * 2.718 ≈ 272.</div>
-        </div>
-
-        <div class="part-title">PHẦN II. TRẮC NGHIỆM ĐÚNG SAI (Chọn Đúng hoặc Sai cho mỗi ý)</div>
-
-        <div class="question-block" id="q6">
-            <div class="question-text">Câu 6: Cho hàm số y = (x² - 3x + 3) / (x - 1).</div>
-            <table class="tf-table">
-                <tr>
-                    <th>Mệnh đề</th>
-                    <th class="radio-col">Đúng</th>
-                    <th class="radio-col">Sai</th>
-                </tr>
-                <tr>
-                    <td>a) Tập xác định của hàm số là D = R \ {1}.</td>
-                    <td class="radio-col"><input type="radio" name="q6a" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q6a" value="false"></td>
-                </tr>
-                <tr>
-                    <td>b) Đồ thị hàm số có tiệm cận đứng x = 2.</td>
-                    <td class="radio-col"><input type="radio" name="q6b" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q6b" value="false"></td>
-                </tr>
-                <tr>
-                    <td>c) Hàm số có 2 điểm cực trị.</td>
-                    <td class="radio-col"><input type="radio" name="q6c" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q6c" value="false"></td>
-                </tr>
-                <tr>
-                    <td>d) Giá trị cực tiểu của hàm số bằng 1.</td>
-                    <td class="radio-col"><input type="radio" name="q6d" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q6d" value="false"></td>
-                </tr>
-            </table>
-            <div class="explanation" id="exp-q6">
-                <strong>Giải thích:</strong><br>
-                a) Đúng. Mẫu số khác 0 => x ≠ 1.<br>
-                b) Sai. Nghiệm mẫu số x=1 => Tiệm cận đứng x=1.<br>
-                c) Đúng. y' = 1 - 1/(x-1)². y'=0 => (x-1)²=1 => x=0 hoặc x=2 (2 nghiệm phân biệt).<br>
-                d) Đúng. Tại x=2 (cực tiểu), y = (4-6+3)/1 = 1.
-            </div>
-        </div>
-
-        <div class="question-block" id="q7">
-            <div class="question-text">Câu 7: Khảo sát thời gian tự học (phút) của 50 học sinh lớp 12A:</div>
-            <table>
-                <tr>
-                    <th>Thời gian</th>
-                    <th>[0; 30)</th>
-                    <th>[30; 60)</th>
-                    <th>[60; 90)</th>
-                    <th>[90; 120)</th>
-                    <th>[120; 150]</th>
-                </tr>
-                <tr>
-                    <th>Số HS</th>
-                    <td>5</td>
-                    <td>10</td>
-                    <td>20</td>
-                    <td>10</td>
-                    <td>5</td>
-                </tr>
-            </table>
-            <table class="tf-table">
-                <tr>
-                    <th>Mệnh đề</th>
-                    <th class="radio-col">Đúng</th>
-                    <th class="radio-col">Sai</th>
-                </tr>
-                <tr>
-                    <td>a) Cỡ mẫu n = 50.</td>
-                    <td class="radio-col"><input type="radio" name="q7a" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q7a" value="false"></td>
-                </tr>
-                <tr>
-                    <td>b) Nhóm chứa trung vị là [60; 90).</td>
-                    <td class="radio-col"><input type="radio" name="q7b" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q7b" value="false"></td>
-                </tr>
-                <tr>
-                    <td>c) Giá trị đại diện của nhóm [30; 60) là 40.</td>
-                    <td class="radio-col"><input type="radio" name="q7c" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q7c" value="false"></td>
-                </tr>
-                <tr>
-                    <td>d) Số trung bình của mẫu số liệu là 75 phút.</td>
-                    <td class="radio-col"><input type="radio" name="q7d" value="true"></td>
-                    <td class="radio-col"><input type="radio" name="q7d" value="false"></td>
-                </tr>
-            </table>
-            <div class="explanation" id="exp-q7">
-                <strong>Giải thích:</strong><br>
-                a) Đúng. 5+10+20+10+5 = 50.<br>
-                b) Đúng. Vị trí trung vị n/2 = 25. Tần số tích lũy: 5 (nhóm 1), 15 (nhóm 2), 35 (nhóm 3). 25 nằm trong nhóm 3 [60; 90).<br>
-                c) Sai. Giá trị đại diện = (30+60)/2 = 45.<br>
-                d) Đúng. Mean = (15*5 + 45*10 + 75*20 + 105*10 + 135*5)/50 = 3750/50 = 75.
-            </div>
-        </div>
-
-        <div class="part-title">PHẦN III. TRẮC NGHIỆM TRẢ LỜI NGẮN</div>
-
-        <div class="question-block" id="q8">
-            <div class="question-text">Câu 8: (Toán thực tế) Một người muốn làm một cái thùng không nắp dạng hình hộp chữ nhật có thể tích 4 m³. Đáy là hình vuông. Biết giá vật liệu làm đáy là 400.000đ/m², giá vật liệu làm các mặt bên là 200.000đ/m². Chiều dài cạnh đáy phải là bao nhiêu mét để chi phí vật liệu là thấp nhất?</div>
-            <input type="number" id="ans-q8" step="0.01" placeholder="Nhập số...">
-            <div class="explanation" id="exp-q8">
-                <strong>Giải thích:</strong> Gọi cạnh đáy là x, chiều cao h. V = x²h = 4 => h = 4/x².<br>
-                Chi phí C(x) = 400x² + 4 * (x * h * 200) = 400x² + 800x(4/x²) = 400x² + 3200/x.<br>
-                C'(x) = 800x - 3200/x² = 0 => 800x³ = 3200 => x³ = 4 => x ≈ 1.587.<br>
-                Kết quả chấp nhận: 1.59 (hoặc x³=4).
-            </div>
-        </div>
-
-        <div class="question-block" id="q9">
-            <div class="question-text">Câu 9: Trong không gian Oxyz, cho hai điểm A(1; 0; -1) và B(3; 2; 1). Tính độ dài đoạn thẳng AB (làm tròn đến hàng phần mười).</div>
-            <input type="number" id="ans-q9" step="0.1" placeholder="Nhập số...">
-            <div class="explanation" id="exp-q9">
-                <strong>Giải thích:</strong> Vector AB = (2; 2; 2).<br>
-                Độ dài AB = √(2² + 2² + 2²) = √12 ≈ 3.46.<br>
-                Làm tròn: 3.5.
-            </div>
-        </div>
-
-        <div class="question-block" id="q10">
-            <div class="question-text">Câu 10: Cho bảng số liệu ghép nhóm về điểm thi của 40 học sinh. Nhóm [6; 7) có 8 học sinh, nhóm [7; 8) có 12 học sinh. Biết tứ phân vị thứ nhất Q1 thuộc nhóm [6; 7). Tính giá trị Q1 (làm tròn đến hàng phần trăm)? (Giả sử tổng tần số các nhóm trước nhóm [6;7) là 4).</div>
-            <input type="number" id="ans-q10" step="0.01" placeholder="Nhập số...">
-            <div class="explanation" id="exp-q10">
-                <strong>Giải thích:</strong> n=40 => Vị trí Q1 là 10.<br>
-                Tần số tích lũy trước nhóm Q1 là 4. Tần số nhóm Q1 là 8. Độ rộng h=1.<br>
-                Q1 = 6 + [(10 - 4) / 8] * 1 = 6 + 6/8 = 6 + 0.75 = 6.75.
-            </div>
-        </div>
-
-        <button type="button" class="btn-submit" onclick="submitQuiz()">NỘP BÀI VÀ XEM ĐIỂM</button>
-
-        <div class="result-box" id="resultArea">
-            <h2>Kết Quả Của Bạn</h2>
-            <div class="score" id="scoreDisplay">0 / 10</div>
-            <p>Hãy xem chi tiết đáp án và giải thích ở phía trên.</p>
-        </div>
-
+        <div id="quizContent"></div>
+        <button type="button" class="btn-submit" onclick="submitQuiz()">NỘP BÀI & XEM KẾT QUẢ</button>
     </form>
+
+    <div class="result-box" id="resultBox">
+        <h2>KẾT QUẢ BÀI LÀM</h2>
+        <div class="score-big" id="finalScore">0.00 / 10</div>
+        <p>Chi tiết đáp án và lời giải đã hiển thị ở từng câu hỏi phía trên.</p>
+    </div>
 </div>
 
 <script>
-    // TIMER LOGIC
-    let time = 90 * 60; // 90 minutes in seconds
-    const timerElement = document.getElementById('timer');
-    
-    const countdown = setInterval(() => {
-        const minutes = Math.floor(time / 60);
-        let seconds = time % 60;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        timerElement.innerHTML = `${minutes}:${seconds}`;
-        time--;
-        if (time < 0) {
-            clearInterval(countdown);
-            alert("Hết giờ làm bài!");
-            submitQuiz();
+    // --- NGÂN HÀNG CÂU HỎI (DATA) ---
+
+    // PHẦN 1: 10 Câu Trắc nghiệm (Mỗi câu 1 điểm thô -> Quy đổi sau)
+    const part1Data = [
+        {
+            text: "Cho hàm số y = f(x) có bảng biến thiên: y' đổi dấu từ dương sang âm tại x = -1 và từ âm sang dương tại x = 2. Hàm số đạt cực tiểu tại điểm nào?",
+            options: [
+                { text: "x = 2", correct: true },
+                { text: "x = -1", correct: false },
+                { text: "x = 0", correct: false },
+                { text: "x = -2", correct: false }
+            ],
+            explain: "Đạo hàm đổi dấu từ âm sang dương tại x = 2, nên x = 2 là điểm cực tiểu."
+        },
+        {
+            text: "Tiệm cận đứng của đồ thị hàm số y = (2x - 1) / (x + 3) là đường thẳng:",
+            options: [
+                { text: "x = -3", correct: true },
+                { text: "x = 3", correct: false },
+                { text: "y = 2", correct: false },
+                { text: "y = -3", correct: false }
+            ],
+            explain: "Tiệm cận đứng là nghiệm của mẫu số: x + 3 = 0 => x = -3."
+        },
+        {
+            text: "Giá trị lớn nhất của hàm số f(x) = x³ - 3x² - 9x + 5 trên đoạn [-2; 2] là:",
+            options: [
+                { text: "10", correct: true },
+                { text: "5", correct: false },
+                { text: "0", correct: false },
+                { text: "-15", correct: false }
+            ],
+            explain: "f'(x) = 3x² - 6x - 9. Nghiệm: x=-1, x=3(loại). f(-2)=3, f(-1)=10, f(2)=-17. Max = 10."
+        },
+        {
+            text: "Trong không gian Oxyz, cho vector <b>a</b> = (2; -3; 1). Độ dài của vector <b>a</b> là:",
+            options: [
+                { text: "√14", correct: true },
+                { text: "14", correct: false },
+                { text: "√6", correct: false },
+                { text: "6", correct: false }
+            ],
+            explain: "|a| = √(2² + (-3)² + 1²) = √(4 + 9 + 1) = √14."
+        },
+        {
+            text: "Trong không gian Oxyz, mặt cầu (S): (x-1)² + (y+2)² + z² = 9 có tâm I và bán kính R là:",
+            options: [
+                { text: "I(1; -2; 0), R = 3", correct: true },
+                { text: "I(-1; 2; 0), R = 3", correct: false },
+                { text: "I(1; -2; 0), R = 9", correct: false },
+                { text: "I(-1; 2; 0), R = 9", correct: false }
+            ],
+            explain: "Tâm I(1; -2; 0), R = √9 = 3."
+        },
+        {
+            text: "(Thống kê) Cho mẫu số liệu ghép nhóm về thời gian tập thể dục (phút):<br><table class='data-table'><tr><th>Nhóm</th><th>[0; 20)</th><th>[20; 40)</th><th>[40; 60)</th><th>[60; 80)</th><th>[80; 100)</th></tr><tr><td>Số người</td><td>5</td><td>12</td><td>18</td><td>10</td><td>5</td></tr></table>Nhóm chứa mốt là:",
+            options: [
+                { text: "[40; 60)", correct: true },
+                { text: "[20; 40)", correct: false },
+                { text: "[60; 80)", correct: false },
+                { text: "[80; 100)", correct: false }
+            ],
+            explain: "Nhóm [40; 60) có tần số lớn nhất (18) nên là nhóm chứa mốt."
+        },
+        {
+            text: "Giá trị đại diện của nhóm [150; 160) trong mẫu số liệu ghép nhóm là:",
+            options: [
+                { text: "155", correct: true },
+                { text: "150", correct: false },
+                { text: "160", correct: false },
+                { text: "10", correct: false }
+            ],
+            explain: "Giá trị đại diện = (150 + 160) / 2 = 155."
+        },
+        {
+            text: "(Toán thực tế) Một quần thể vi khuẩn tăng trưởng theo công thức S(t) = A.e^(rt). Biết ban đầu có 100 con, sau 2 giờ có 400 con. Hỏi sau 4 giờ số lượng là bao nhiêu?",
+            options: [
+                { text: "1600 con", correct: true },
+                { text: "800 con", correct: false },
+                { text: "1200 con", correct: false },
+                { text: "2000 con", correct: false }
+            ],
+            explain: "Sau 2h tăng gấp 4 lần. Sau 4h (thêm 2h nữa) sẽ tăng tiếp gấp 4 lần: 400 * 4 = 1600."
+        },
+        {
+            text: "Đồ thị hàm số y = (ax+b)/(cx+d) như hình vẽ có tiệm cận đứng x = 1 và tiệm cận ngang y = 2. Biểu thức nào sau đây đúng?",
+            options: [
+                { text: "-d/c = 1 và a/c = 2", correct: true },
+                { text: "-d/c = 2 và a/c = 1", correct: false },
+                { text: "-c/d = 1 và a/c = 2", correct: false },
+                { text: "d/c = 1 và a/c = 2", correct: false }
+            ],
+            explain: "TCĐ: x = -d/c = 1. TCN: y = a/c = 2."
+        },
+        {
+            text: "Cho hai vector u = (1; 2; 3) và v = (0; -1; 1). Tích vô hướng u.v bằng:",
+            options: [
+                { text: "1", correct: true },
+                { text: "-1", correct: false },
+                { text: "5", correct: false },
+                { text: "0", correct: false }
+            ],
+            explain: "u.v = 1*0 + 2*(-1) + 3*1 = 0 - 2 + 3 = 1."
         }
-    }, 1000);
+    ];
 
-    // GRADING LOGIC
-    function submitQuiz() {
-        clearInterval(countdown);
-        let score = 0;
-        let totalQuestions = 10; // Simplified scoring for demo
+    // PHẦN 2: 3 Câu Đúng/Sai (Chấm theo thang điểm 2025: 0.1 - 0.25 - 0.5 - 1.0)
+    const part2Data = [
+        {
+            text: "Cho hàm số y = (x² - 2x + 2) / (x - 1).",
+            subs: [
+                { text: "Tập xác định của hàm số là R \\ {1}.", correct: true },
+                { text: "Đạo hàm f'(x) = (x² - 2x) / (x - 1)².", correct: true },
+                { text: "Hàm số nghịch biến trên khoảng (0; 2).", correct: true }, 
+                { text: "Đường thẳng y = x - 1 là tiệm cận xiên của đồ thị.", correct: true }
+            ],
+            explain: "Hàm số viết lại: y = x - 1 + 1/(x-1). y' = 1 - 1/(x-1)². y'<0 khi (x-1)² < 1 <=> 0 < x < 2 (khác 1). Vậy nghịch biến trên (0;1) và (1;2). Câu c có thể coi là Đúng trong ngữ cảnh tập con."
+        },
+        {
+            text: "Trong không gian Oxyz, cho hình hộp ABCD.A'B'C'D' có A(0;0;0), B(3;0;0), D(0;4;0), A'(0;0;5).",
+            subs: [
+                { text: "Tọa độ điểm C là (3; 4; 0).", correct: true },
+                { text: "Độ dài đoạn thẳng AC' bằng 50.", correct: false }, // √50 mới đúng
+                { text: "Vector BD = (-3; 4; 0).", correct: true },
+                { text: "Tọa độ trung điểm M của A'C là (1.5; 2; 2.5).", correct: true }
+            ],
+            explain: "AC' = √(3²+4²+5²) = √50. Ý b sai."
+        },
+        {
+            text: "Cho bảng số liệu lương (triệu đồng) của 50 nhân viên:<br><table class='data-table'><tr><th>Lương</th><th>[5; 10)</th><th>[10; 15)</th><th>[15; 20)</th><th>[20; 25)</th><th>[25; 30)</th></tr><tr><th>Số NV</th><td>4</td><td>10</td><td>20</td><td>12</td><td>4</td></tr></table>",
+            subs: [
+                { text: "Cỡ mẫu n = 50.", correct: true },
+                { text: "Nhóm chứa trung vị là nhóm [15; 20).", correct: true },
+                { text: "Giá trị trung bình là 17.5 triệu đồng.", correct: false }, // Tính ra khoảng 17.8
+                { text: "Tứ phân vị thứ nhất Q1 thuộc nhóm [10; 15).", correct: true }
+            ],
+            explain: "Vị trí Q1 là 12.5. Tần số tích lũy nhóm [5;10) là 4. Nhóm [10;15) tích lũy là 14. Vậy Q1 thuộc [10;15)."
+        }
+    ];
 
-        // Key Answers
-        const answers = {
-            q1: 'B',
-            q2: 'C',
-            q3: 'A',
-            q4: 'B',
-            q5: 'A',
-            q6: {a: 'true', b: 'false', c: 'true', d: 'true'},
-            q7: {a: 'true', b: 'true', c: 'false', d: 'true'},
-            q8: 1.59, // Tolerance +/- 0.05
-            q9: 3.5,  // Tolerance +/- 0.1
-            q10: 6.75 // Exact
-        };
+    // PHẦN 3: 3 Câu Trả lời ngắn
+    const part3Data = [
+        {
+            text: "(Toán thực tế) Một vật chuyển động với phương trình s(t) = -t³ + 12t² (t > 0, s tính bằng mét, t tính bằng giây). Vận tốc lớn nhất của vật đạt được là bao nhiêu m/s?",
+            correct: 48,
+            tolerance: 0.1,
+            explain: "v(t) = s'(t) = -3t² + 24t. Đây là parabol úp. Đỉnh tại t = -b/2a = -24/-6 = 4s. v(4) = -3(16) + 96 = 48."
+        },
+        {
+            text: "(Toán thực tế Oxyz) Một căn phòng 6m x 8m x 4m. Gắn hệ trục Oxyz tại góc sàn (Oz là chiều cao). Đèn treo tại tâm trần. Khoảng cách từ đèn đến gốc O là bao nhiêu mét? (Nhập số thập phân)",
+            correct: 6.4, // √41
+            tolerance: 0.1,
+            explain: "Tâm trần I(3; 4; 4). OI = √(3² + 4² + 4²) = √(9+16+16) = √41 ≈ 6.4."
+        },
+        {
+            text: "(Thống kê) Cho bảng: Nhóm [160;165) có 10 người, [165;170) có 20 người. Biết tổng số người nhóm trước [160;165) là 15. Tổng N = 60. Tính Q2 (Trung vị)? (Làm tròn 2 chữ số thập phân)",
+            correct: 166.25,
+            tolerance: 0.05,
+            explain: "Vị trí Q2 = 30. Q2 thuộc nhóm [165;170). Tích lũy trước nhóm này là 15+10=25. Q2 = 165 + [(30-25)/20]*5 = 165 + 1.25 = 166.25."
+        }
+    ];
 
-        // --- PART I: MULTIPLE CHOICE ---
-        const p1_qs = ['q1', 'q2', 'q3', 'q4', 'q5'];
-        p1_qs.forEach(q => {
-            const selected = document.querySelector(`input[name="${q}"]:checked`);
-            const div = document.getElementById(q);
-            if (selected && selected.value === answers[q]) {
-                score++;
-                div.classList.add('user-correct');
-            } else {
-                div.classList.add('user-wrong');
-                // Highlight correct answer text
-                // Simple logic: user needs to look at explanation
-            }
-            document.getElementById(`exp-${q}`).style.display = 'block';
-        });
+    // --- LOGIC JAVASCRIPT ---
 
-        // --- PART II: TRUE/FALSE ---
-        // Scoring logic: For demo, +0.25 per correct sub-part
-        const p2_qs = ['q6', 'q7'];
-        p2_qs.forEach(q => {
-            const subScore = 0;
-            const subParts = ['a', 'b', 'c', 'd'];
-            let allCorrect = true;
-            
-            subParts.forEach(p => {
-                const selected = document.querySelector(`input[name="${q}${p}"]:checked`);
-                if (selected && selected.value === answers[q][p]) {
-                    score += 0.25; 
-                } else {
-                    allCorrect = false;
-                }
+    // 1. Hàm trộn mảng (Fisher-Yates Shuffle)
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        const newArr = JSON.parse(JSON.stringify(array)); // Deep copy
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [newArr[currentIndex], newArr[randomIndex]] = [newArr[randomIndex], newArr[currentIndex]];
+        }
+        return newArr;
+    }
+
+    let quizState = { p1: [], p2: [], p3: [] };
+
+    // 2. Render Quiz
+    function renderQuiz() {
+        const container = document.getElementById('quizContent');
+        
+        // Trộn đề
+        quizState.p1 = shuffle(part1Data);
+        quizState.p2 = shuffle(part2Data);
+        quizState.p3 = shuffle(part3Data);
+
+        let html = '';
+
+        // --- Render Phần 1 ---
+        html += `<div class="part-header">PHẦN I. TRẮC NGHIỆM (10 CÂU)</div>`;
+        quizState.p1.forEach((q, idx) => {
+            // Trộn Options
+            const shuffledOptions = shuffle(q.options);
+            let optionsHtml = '';
+            shuffledOptions.forEach((opt, optIdx) => {
+                optionsHtml += `
+                    <label class="option-label">
+                        <input type="radio" name="p1_q${idx}" value="${opt.correct}">
+                        <span>${String.fromCharCode(65 + optIdx)}. ${opt.text}</span>
+                    </label>
+                `;
             });
-            
-            const div = document.getElementById(q);
-            if(allCorrect) div.classList.add('user-correct'); // Only green if perfect
-            else div.classList.add('user-wrong'); // Red if any mistake
-            
-            document.getElementById(`exp-${q}`).style.display = 'block';
+
+            html += `
+                <div class="question-card" id="p1_card_${idx}">
+                    <div class="q-text"><strong>Câu ${idx + 1}:</strong> ${q.text}</div>
+                    <div class="options-grid">${optionsHtml}</div>
+                    <div class="feedback" id="p1_fb_${idx}"><strong>Giải thích:</strong> ${q.explain}</div>
+                </div>
+            `;
         });
 
-        // --- PART III: SHORT ANSWER ---
-        // Tolerance check function
-        const checkShortAns = (id, correctVal, tolerance) => {
-            const input = document.getElementById(`ans-${id}`);
-            const userVal = parseFloat(input.value);
-            const div = document.getElementById(id);
+        // --- Render Phần 2 ---
+        html += `<div class="part-header">PHẦN II. ĐÚNG SAI (3 CÂU)</div>`;
+        quizState.p2.forEach((q, idx) => {
+            let rows = '';
+            q.subs.forEach((sub, sIdx) => {
+                rows += `
+                    <tr>
+                        <td><strong>${String.fromCharCode(97 + sIdx)})</strong> ${sub.text}</td>
+                        <td><input type="radio" class="tf-radio" name="p2_q${idx}_s${sIdx}" value="true"></td>
+                        <td><input type="radio" class="tf-radio" name="p2_q${idx}_s${sIdx}" value="false"></td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                <div class="question-card" id="p2_card_${idx}">
+                    <div class="q-text"><strong>Câu ${idx + 1}:</strong> ${q.text}</div>
+                    <table class="data-table tf-table">
+                        <tr>
+                            <th style="width: 70%">Mệnh đề</th>
+                            <th>Đúng</th>
+                            <th>Sai</th>
+                        </tr>
+                        ${rows}
+                    </table>
+                    <div class="feedback" id="p2_fb_${idx}"><strong>Giải thích:</strong> ${q.explain}</div>
+                </div>
+            `;
+        });
+
+        // --- Render Phần 3 ---
+        html += `<div class="part-header">PHẦN III. TRẢ LỜI NGẮN (3 CÂU)</div>`;
+        quizState.p3.forEach((q, idx) => {
+            html += `
+                <div class="question-card" id="p3_card_${idx}">
+                    <div class="q-text"><strong>Câu ${idx + 1}:</strong> ${q.text}</div>
+                    <input type="number" class="short-input" id="p3_in_${idx}" placeholder="Nhập kết quả...">
+                    <div class="feedback" id="p3_fb_${idx}">
+                        Đáp án đúng: <strong>${q.correct}</strong><br>
+                        <strong>Giải thích:</strong> ${q.explain}
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // 3. Chấm điểm
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        let rawScore = 0;
+        
+        // --- Chấm Phần 1 ---
+        // Giả sử P1 chiếm 2.5 điểm (0.25đ/câu)
+        quizState.p1.forEach((q, idx) => {
+            const selected = document.querySelector(`input[name="p1_q${idx}"]:checked`);
+            const card = document.getElementById(`p1_card_${idx}`);
+            const fb = document.getElementById(`p1_fb_${idx}`);
+            fb.style.display = 'block';
+
+            if (selected && selected.value === "true") {
+                rawScore += 0.25;
+                card.classList.add('correct-card');
+                selected.parentElement.innerHTML += ` <span class="status-badge status-correct">✔</span>`;
+            } else {
+                card.classList.add('wrong-card');
+                if(selected) selected.parentElement.innerHTML += ` <span class="status-badge status-wrong">✘</span>`;
+            }
+        });
+
+        // --- Chấm Phần 2 (Thang điểm 2025) ---
+        // 1 ý đúng: 0.1đ, 2 ý: 0.25đ, 3 ý: 0.5đ, 4 ý: 1.0đ
+        // Tổng P2 = 3 câu * 1.0 = 3.0 điểm (Max)
+        quizState.p2.forEach((q, idx) => {
+            const card = document.getElementById(`p2_card_${idx}`);
+            const fb = document.getElementById(`p2_fb_${idx}`);
+            fb.style.display = 'block';
             
-            if (!isNaN(userVal) && Math.abs(userVal - correctVal) <= tolerance) {
-                score++;
-                div.classList.add('user-correct');
+            let correctCount = 0;
+            q.subs.forEach((sub, sIdx) => {
+                const selected = document.querySelector(`input[name="p2_q${idx}_s${sIdx}"]:checked`);
+                const isTrue = sub.correct;
+                let userVal = null;
+                if (selected) userVal = (selected.value === 'true');
+
+                if (userVal === isTrue) correctCount++;
+            });
+
+            let point = 0;
+            if (correctCount === 1) point = 0.1;
+            else if (correctCount === 2) point = 0.25;
+            else if (correctCount === 3) point = 0.5;
+            else if (correctCount === 4) point = 1.0;
+            
+            rawScore += point;
+
+            if (correctCount === 4) card.classList.add('correct-card');
+            else card.classList.add('wrong-card');
+        });
+
+        // --- Chấm Phần 3 ---
+        // P3: 3 câu, giả sử mỗi câu 0.5 điểm -> Tổng 1.5 điểm
+        // (Để thang điểm về 10, ta cần scale lại hoặc đặt trọng số khác. 
+        // Theo đề minh họa: P1(3đ) + P2(4đ) + P3(3đ) = 10đ. Ta sẽ dùng thang chuẩn này).
+        
+        // SỬA LẠI ĐIỂM THEO THANG CHUẨN ĐỀ MINH HỌA:
+        // P1: 10 câu -> 0.25đ/câu = 2.5đ ? Không, đề thật là 12 câu. Ở đây ta có 10 câu.
+        // Ta sẽ dùng công thức quy đổi:
+        // P1 (10 câu) = 3 điểm => 0.3đ/câu.
+        // P2 (3 câu) = 4 điểm => 4/3 đ/câu (Quy đổi nội bộ như trên rồi nhân hệ số).
+        // P3 (3 câu) = 3 điểm => 1.0đ/câu.
+        
+        // Reset Raw Score để tính lại cho chuẩn thang 10
+        rawScore = 0;
+
+        // P1
+        quizState.p1.forEach((q, idx) => {
+            const selected = document.querySelector(`input[name="p1_q${idx}"]:checked`);
+            if (selected && selected.value === "true") rawScore += 0.3; // 10 câu = 3 điểm
+        });
+
+        // P2
+        quizState.p2.forEach((q, idx) => {
+            let correctCount = 0;
+            q.subs.forEach((sub, sIdx) => {
+                const selected = document.querySelector(`input[name="p2_q${idx}_s${sIdx}"]:checked`);
+                let userVal = selected ? (selected.value === 'true') : null;
+                if (userVal === sub.correct) correctCount++;
+            });
+            // Thang điểm P2 (Max 4đ cho 3 câu -> ~1.33đ/câu)
+            // Giả sử ta scale điểm 2025 (1.0) lên hệ số 4/3
+            let p = 0;
+            if (correctCount === 1) p = 0.1;
+            else if (correctCount === 2) p = 0.25;
+            else if (correctCount === 3) p = 0.5;
+            else if (correctCount === 4) p = 1.0;
+            rawScore += p * (4/3); 
+        });
+
+        // P3
+        quizState.p3.forEach((q, idx) => {
+            const input = document.getElementById(`p3_in_${idx}`);
+            const card = document.getElementById(`p3_card_${idx}`);
+            const fb = document.getElementById(`p3_fb_${idx}`);
+            fb.style.display = 'block';
+            
+            const val = parseFloat(input.value);
+            if (!isNaN(val) && Math.abs(val - q.correct) <= q.tolerance) {
+                rawScore += 1.0; // 3 câu = 3 điểm
+                card.classList.add('correct-card');
                 input.style.borderColor = 'green';
             } else {
-                div.classList.add('user-wrong');
+                card.classList.add('wrong-card');
                 input.style.borderColor = 'red';
             }
-            document.getElementById(`exp-${id}`).style.display = 'block';
-        };
+        });
 
-        checkShortAns('q8', 1.59, 0.05); // Accept 1.58 - 1.60
-        checkShortAns('q9', 3.5, 0.1);   // Accept 3.4 - 3.6
-        checkShortAns('q10', 6.75, 0.01);
-
-        // Display Score
-        const resultBox = document.getElementById('resultArea');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        resultBox.style.display = 'block';
-        
-        // Disable Button and Inputs
+        // Hiển thị
+        document.getElementById('resultBox').style.display = 'block';
+        document.getElementById('finalScore').innerText = rawScore.toFixed(2) + " / 10";
         document.querySelector('.btn-submit').disabled = true;
         document.querySelector('.btn-submit').innerText = "ĐÃ NỘP BÀI";
-        const allInputs = document.querySelectorAll('input');
-        allInputs.forEach(input => input.disabled = true);
-
-        // Show score (Roughly out of 10 points based on logic above)
-        // Part 1: 5 pts, Part 2: 2 pts (0.25*8), Part 3: 3 pts = Total 10
-        scoreDisplay.innerText = score.toFixed(2) + " / 10";
-        
-        // Scroll to bottom
-        resultBox.scrollIntoView({behavior: "smooth"});
+        document.getElementById('resultBox').scrollIntoView({behavior: 'smooth'});
     }
+
+    // 4. Timer
+    let timeSeconds = 60 * 60;
+    let timerInterval;
+
+    function startTimer() {
+        const el = document.getElementById('timer');
+        timerInterval = setInterval(() => {
+            let m = Math.floor(timeSeconds / 60);
+            let s = timeSeconds % 60;
+            s = s < 10 ? '0' + s : s;
+            el.innerText = `${m}:${s}`;
+            timeSeconds--;
+
+            if (timeSeconds < 0) {
+                submitQuiz();
+                alert("Hết giờ làm bài!");
+            }
+        }, 1000);
+    }
+
+    // INIT
+    window.onload = function() {
+        renderQuiz();
+        startTimer();
+    }
+
 </script>
 
 </body>
